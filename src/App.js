@@ -1,7 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { AuthView } from './views/auth';
+
 
 export const App = () => (
-    <div>
-        <h1>This is my basic react boilerplate project!!</h1>
-    </div>
+    <BrowserRouter>
+        <Switch>
+            <Redirect from="/" to="/auth" exact />
+            <Route path="/auth" component={AuthView} />
+            <Route path="/events" component={null} />
+            <Route path="/bookings" component={null} />
+        </Switch>
+    </BrowserRouter>
 );

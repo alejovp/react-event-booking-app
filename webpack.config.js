@@ -13,7 +13,7 @@ module.exports = {
 	},
 	output: {
 		filename: '[name].bundle.js',
-		// sourceMapFilename: '[name].bundle.js.map',
+		sourceMapFilename: '[name].bundle.js.map',
 		path: `${BUILD_DIR}/js`
 	},
 	module: {
