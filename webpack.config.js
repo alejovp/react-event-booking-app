@@ -9,7 +9,8 @@ module.exports = {
 	},
 	devServer: {
 		contentBase: BUILD_DIR,
-		publicPath: '/js/'
+		publicPath: '/js/',
+		historyApiFallback: true,
 	},
 	output: {
 		filename: '[name].bundle.js',
