@@ -29,11 +29,17 @@ const Navbar = (props) => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
+          <IconButton 
+            className={classes.menuButton} 
+            color="inherit" 
+            aria-label="Menu">
+                <MenuIcon />
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
-            EBookings
+          <Typography 
+            variant="h6" 
+            color="inherit" 
+            className={classes.grow}>
+                EBookings
           </Typography>
           <Button
             component={NavLink}
