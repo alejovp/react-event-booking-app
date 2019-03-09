@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { AuthView } from './views/AuthView';
+import AuthView from './views/AuthView';
 import { EventsView } from './views/EventsView';
 import { BookingsView } from './views/BookingsView';
 import Navbar from './components/Navbar';
