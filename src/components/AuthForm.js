@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { withStyles, TextField, Button, Grid } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 
 
 const styles = theme => ({
@@ -8,29 +12,25 @@ const styles = theme => ({
       flexWrap: 'wrap',
       padding: 16
     },
-    textField: {
-    //   marginLeft: theme.spacing.unit,
-    //   marginRight: 16,
-    },
     button: {
       margin: theme.spacing.unit,
     },
+
 });
 
-class LoginForm extends Component {
-    render() {
-        const { classes } = this.props;
+class AuthForm extends Component {
 
-        return (
-            <form 
-                className={classes.container} 
-                noValidate 
-                autoComplete="off">
-                <Grid container spacing={16}>
+    renderExtraFields = () => {
+        const { formType } = this.props;
+
+        if (formType === 'login') {
+            return null;
+        }
+
+        return  <React.Fragment>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             label="First name"
-                            className={classes.textField}
                             type="text"
                             name="firstname"
                             autoComplete="name"
@@ -41,7 +41,6 @@ class LoginForm extends Component {
                     <Grid item xs={12} sm={6}>
                         <TextField
                             label="Last name"
-                            className={classes.textField}
                             type="text"
                             name="lastname"
                             autoComplete="last-name"
@@ -49,6 +48,38 @@ class LoginForm extends Component {
                             fullWidth
                         />
                     </Grid>
+                </React.Fragment>;
+    };
+
+    renderButtons = () => {
+        const { formType, classes } = this.props;
+
+        if (formType === 'login') {
+            return  <Button 
+                        variant="contained" 
+                        color="primary" 
+                        className={classes.button}>
+                        Login
+                    </Button>;
+        }
+        return  <Button 
+                    variant="contained" 
+                    color="primary" 
+                    className={classes.button}>
+                    Register
+                </Button>;
+    };
+    
+    render() {
+        const { formType, classes } = this.props;
+
+        return (
+            <form 
+                className={classes.container} 
+                noValidate 
+                autoComplete="off">
+                <Grid container spacing={16}>
+                    { this.renderExtraFields() }
                     <Grid item xs={12}>
                         <TextField
                             label="Email"
@@ -71,13 +102,11 @@ class LoginForm extends Component {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={12}>
-                        <Button 
-                            variant="contained" 
-                            color="primary" 
-                            className={classes.button}>
-                            Login
-                        </Button>
+                    <Grid item 
+                            xs={12}
+                            container
+                            justify="flex-end">
+                        { this.renderButtons() }
                     </Grid>
                 </Grid>
             </form>
@@ -85,4 +114,9 @@ class LoginForm extends Component {
     }
 }
 
-export default withStyles(styles)(LoginForm);
+AuthForm.propTypes = {
+    classes: PropTypes.object,
+    formType: PropTypes.string,
+};
+
+export default withStyles(styles)(AuthForm);

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import LoginForm from '../components/LoginForm';
+import AuthForm from '../components/AuthForm';
 
 
 export class AuthView extends Component {
     render() {
-        return <LoginForm />;
+        return <AuthForm formType="register" />;
     }
 }
