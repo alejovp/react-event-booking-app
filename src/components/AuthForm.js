@@ -35,7 +35,7 @@ class AuthForm extends Component {
 
     constructor(props) {
         super(props);
-
+        this.formEl = React.createRef();
         this.state = initState;
     }
 
@@ -115,7 +115,7 @@ class AuthForm extends Component {
                 email,
                 password
             });
-            this.setState(initState);
+            this.formEl.current.reset();
         }
     }
 
@@ -183,7 +183,8 @@ class AuthForm extends Component {
         const { emailError, passwordError } = this.state.formErrors;
 
         return (    
-            <form 
+            <form
+                ref={this.formEl}
                 className={classes.container}
                 autoComplete="off"
                 onSubmit={this.onSubmit}
