@@ -43,6 +43,37 @@ class AuthView extends Component {
     
     onSubmitHandler = userInputs => {
         console.log(userInputs);
+
+        const registerReqBody = {
+            query: `
+                mutation {
+                    createUser(userInput: {email: "${userInputs.email}", password: "${userInputs.password}"}) {
+                        _id
+                        email
+                    }
+                }
+            `
+        };
+        
+        fetch('http://localhost:3000/graphql-api', {
+            method: 'POST',
+            body: JSON.stringify(registerReqBody),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Request failed!');
+            }
+            return res.json();
+        })
+        .then(resData => {
+            console.log(resData);
+        })
+        .catch(err => {
+            console.log(err);
+        });
     }
 
     render() {
