@@ -47,8 +47,13 @@ class AuthView extends Component {
         const registerReqBody = {
             query: `
                 mutation {
-                    createUser(userInput: {email: "${userInputs.email}", password: "${userInputs.password}"}) {
+					createUser(userInput: {email: "${userInputs.email}",
+											password: "${userInputs.password}", 
+											firstName: "${userInputs.firstName}", 
+											lastName: "${userInputs.lastName}"}) 
+					{
                         _id
+                        firstName
                         email
                     }
                 }
