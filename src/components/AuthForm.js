@@ -49,11 +49,12 @@ class AuthForm extends Component {
         const { firstName, lastName, email, password } = this.state;
         let formErrors = {};
         let formIsValid = true;
-  
-        if (!firstName) {
-          formIsValid = false;
-          formErrors['firstNameError'] = 'Please enter your first name.';
-        }
+        
+        // Now this field it's not required
+        // if (!firstName) {
+        //   formIsValid = false;
+        //   formErrors['firstNameError'] = 'Please enter your first name.';
+        // }
   
         if (firstName) {
           if (!firstName.match(/^[A-zÀ-ÿ]*$/)) {
@@ -62,10 +63,11 @@ class AuthForm extends Component {
           }
         }
 
-        if (!lastName) {
-          formIsValid = false;
-          formErrors['lastNameError'] = 'Please enter your last name.';
-        }
+        // Now this field it's not required
+        // if (!lastName) {
+        //   formIsValid = false;
+        //   formErrors['lastNameError'] = 'Please enter your last name.';
+        // }
   
         if (lastName) {
           if (!lastName.match(/^[A-zÀ-ÿ]*$/)) {

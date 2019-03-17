@@ -21,15 +21,15 @@ const styles = theme => ({
 });
 
 class AuthView extends Component {
-
+    
     constructor(props) {
         super(props);
-
+        
         this.state = {
-            formType: 'register',
+            formType: 'login',
         };
     }
-
+    
     onFormToggle = () => {
         const { formType } = this.state;
         if (formType === 'login') {
@@ -44,25 +44,39 @@ class AuthView extends Component {
     onSubmitHandler = userInputs => {
         console.log(userInputs);
 
-        const registerReqBody = {
+        let requestBody = {
             query: `
-                mutation {
-					createUser(userInput: {email: "${userInputs.email}",
-											password: "${userInputs.password}", 
-											firstName: "${userInputs.firstName}", 
-											lastName: "${userInputs.lastName}"}) 
-					{
-                        _id
-                        firstName
-                        email
+                query {
+                    login(email: "${userInputs.email}", password: "${userInputs.password}") {
+                        userId
+                        token
+                        tokenExpiration
                     }
-                }
+                }  
             `
         };
+
+        if (this.state.formType === 'register') {
+            requestBody = {
+                query: `
+                    mutation {
+                        createUser(userInput: {email: "${userInputs.email}",
+                                                password: "${userInputs.password}", 
+                                                firstName: "${userInputs.firstName}", 
+                                                lastName: "${userInputs.lastName}"}) 
+                        {
+                            _id
+                            firstName
+                            email
+                        }
+                    }
+                `
+            };
+        }
         
         fetch('http://localhost:3000/graphql-api', {
             method: 'POST',
-            body: JSON.stringify(registerReqBody),
+            body: JSON.stringify(requestBody),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -84,7 +98,7 @@ class AuthView extends Component {
     render() {
         const { classes } = this.props;
         const { formType } = this.state;
-
+        console.log('hey, is this the line number 82 from AuthView module?!');
         return (
             <section>
                 <Paper classes={{ root: classes.root }}>
