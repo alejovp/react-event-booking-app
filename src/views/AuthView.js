@@ -3,6 +3,7 @@ import AuthForm from '../components/AuthForm';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography, Link } from '@material-ui/core';
+import AuthContext from '../context/auth-context';
 
 
 const styles = theme => ({
@@ -30,6 +31,8 @@ class AuthView extends Component {
         };
     }
     
+    static contextType = AuthContext;
+
     onFormToggle = () => {
         const { formType } = this.state;
         if (formType === 'login') {
@@ -89,6 +92,10 @@ class AuthView extends Component {
         })
         .then(resData => {
             console.log(resData);
+            if (resData.data.login.token) {
+                const { userId, token, tokenExpiration } = resData.data.login;
+                this.context.login(userId, token, tokenExpiration);
+            }
         })
         .catch(err => {
             console.log(err);
