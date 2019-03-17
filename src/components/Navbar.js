@@ -9,7 +9,11 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import MenuList from '@material-ui/core/MenuList';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Paper from '@material-ui/core/Paper';
+import Grow from '@material-ui/core/Grow';
+import Popper from '@material-ui/core/Popper';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AuthContext from '../context/auth-context';
 
@@ -91,23 +95,29 @@ class Navbar extends Component {
 								>
 									<AccountCircle />
 								</IconButton>
-								<Menu
-									id="menu-appbar"
-									anchorEl={anchorEl}
-									anchorOrigin={{
-										vertical: 'top',
-										horizontal: 'right',
-									}}
-									transformOrigin={{
-										vertical: 'top',
-										horizontal: 'right',
-									}}
-									open={open}
-									onClose={this.handleClose}
+								<Popper 
+									open={open} 
+									anchorEl={anchorEl} 
+									transition 
+									disablePortal
 								>
-									<MenuItem>My account</MenuItem>
-									<MenuItem onClick={context.logout}>Logout</MenuItem>
-								</Menu>
+									{({ TransitionProps, placement }) => (
+										<Grow
+											{...TransitionProps}
+											id="menu-appbar"
+											style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+										>
+											<Paper>
+												<ClickAwayListener onClickAway={this.handleClose}>
+													<MenuList>
+														<MenuItem>My account</MenuItem>
+														<MenuItem onClick={context.logout}>Logout</MenuItem>
+													</MenuList>
+												</ClickAwayListener>
+											</Paper>
+										</Grow>
+									)}
+								</Popper>
 							</div>
 						}
 					</Toolbar>
