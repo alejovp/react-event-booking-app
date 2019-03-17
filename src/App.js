@@ -18,6 +18,27 @@ export class App extends Component {
 
     logout = () => this.setState({ userId: undefined, token: undefined });
 
+    renderRoutes = () => {
+        if (this.state.token) {
+            return (
+                <Switch>
+                    <Redirect from="/" to="/events" exact />
+                    <Redirect from="/auth" to="/events" exact />
+                    <Route path="/events" component={EventsView} />
+                    <Route path="/bookings" component={BookingsView} />
+                </Switch>
+            );
+        }
+
+        return (
+            <Switch>
+                <Redirect from="/" to="/auth" exact />
+                <Route path="/auth" component={AuthView} />
+                <Route path="/events" component={EventsView} />
+            </Switch>
+        );
+    }
+
     render () {
         const { userId, token } = this.state;
 
@@ -34,12 +55,7 @@ export class App extends Component {
                     >
                         <Navbar />
                         <main>
-                            <Switch>
-                                <Redirect from="/" to="/auth" exact />
-                                <Route path="/auth" component={AuthView} />
-                                <Route path="/events" component={EventsView} />
-                                <Route path="/bookings" component={BookingsView} />
-                            </Switch>
+                            { this.renderRoutes() }
                         </main>
                     </AuthContext.Provider>
                 </React.Fragment>
