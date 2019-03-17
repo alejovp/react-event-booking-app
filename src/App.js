@@ -9,11 +9,29 @@ import AuthContext from './context/auth-context';
 
 export class App extends Component {
 
+    state = {
+        userId: undefined,
+        token: undefined
+    }
+
+    login = (userId, token, tokenExpiration) => this.setState({ userId, token });
+
+    logout = () => this.setState({ userId: undefined, token: undefined });
+
     render () {
+        const { userId, token } = this.state;
+
         return (
             <BrowserRouter>
                 <React.Fragment>
-                    <AuthContext.Provider>
+                    <AuthContext.Provider 
+                        value={{ 
+                            userId, 
+                            token,
+                            login: this.login,
+                            logout: this.logout
+                        }}
+                    >
                         <Navbar />
                         <main>
                             <Switch>
