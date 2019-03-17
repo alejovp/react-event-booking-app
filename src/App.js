@@ -33,6 +33,7 @@ export class App extends Component {
         return (
             <Switch>
                 <Redirect from="/" to="/auth" exact />
+                <Redirect from="/bookings" to="/auth" exact />
                 <Route path="/auth" component={AuthView} />
                 <Route path="/events" component={EventsView} />
             </Switch>
