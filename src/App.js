@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import AuthView from './containers/AuthView';
-import { EventsView } from './containers/EventsView';
+import EventsView from './containers/EventsView';
 import { BookingsView } from './containers/BookingsView';
 import AuthContext from './context/auth-context';
 import Navbar from './components/Navbar/Navbar';
-import { Modal } from './components/Modal/Modal';
-import { Backdrop } from './components/Backdrop/Backdrop';
 
 
 export class App extends Component {
@@ -57,15 +55,9 @@ export class App extends Component {
                         }}
                     >
                         <Navbar />
-                        <React.Fragment>
-                            <Backdrop></Backdrop>
-                            <Modal canCancel canConfirm>
-                                <p>Modal Content</p>
-                            </Modal>
-                            <main>
-                                {this.renderRoutes()}
-                            </main>
-                        </React.Fragment>
+                        <main>
+                            {this.renderRoutes()}
+                        </main>
                     </AuthContext.Provider>
                 </React.Fragment>
             </BrowserRouter>

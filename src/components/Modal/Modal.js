@@ -3,26 +3,30 @@ import React from 'react';
 import './Modal.scss';
 
 
-const renderButtons = (canCancel, canConfirm) => {
-	let buttons = [];
-	if (canCancel) {
-		buttons.push(<button key="cancel">Cancel</button>);
-	}
-	if (canConfirm) {
-		buttons.push(<button key="confirm">Confirm</button>);
-	}
-	return buttons;
-};
-
 export const Modal = props => {
-	const { title, canCancel, canConfirm, children } = props;
+	const { title, canCancel, canConfirm, children, onCancel, onConfirm } = props;
+	
+	const renderButtons = () => {
+		let buttons = [];
+		if (canCancel) {
+			buttons.push(<button 
+							key="cancel" 
+							onClick={onCancel}>Cancel</button>);
+		}
+		if (canConfirm) {
+			buttons.push(<button 
+							key="confirm"
+							onClick={onConfirm}>Confirm</button>);
+		}
+		return buttons;
+	};
 
 	return (
 		<div className="modal">
 			<header className="modal__header">{title}</header>
 			<div className="modal__content">{children}</div>
 			<div className="modal__actions">
-				{renderButtons(canCancel, canConfirm)}
+				{renderButtons()}
 			</div>
 		</div>
 	);
