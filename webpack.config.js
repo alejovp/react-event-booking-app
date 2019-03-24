@@ -4,6 +4,7 @@ const BUILD_DIR = path.resolve(__dirname, 'public');
 
 
 module.exports = {
+	devtool: 'source-map',
 	entry: {
 		main: ['babel-polyfill', `${APP_DIR}/index.js`]
 	},
