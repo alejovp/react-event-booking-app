@@ -49,6 +49,10 @@ class Navbar extends Component {
 		const { classes } = this.props;
 		const { anchorEl } = this.state;
 		const open = Boolean(anchorEl);
+		const handleLogOut = () => {
+			context.logout();
+			this.handleClose();
+		};
 
 		return (
 			<div className={classes.root}>
@@ -111,7 +115,7 @@ class Navbar extends Component {
 												<ClickAwayListener onClickAway={this.handleClose}>
 													<MenuList>
 														<MenuItem>My account</MenuItem>
-														<MenuItem onClick={context.logout}>Logout</MenuItem>
+														<MenuItem onClick={handleLogOut}>Logout</MenuItem>
 													</MenuList>
 												</ClickAwayListener>
 											</Paper>
