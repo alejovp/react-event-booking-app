@@ -6,10 +6,10 @@ import './Modal.scss';
 const renderButtons = (canCancel, canConfirm) => {
 	let buttons = [];
 	if (canCancel) {
-		buttons.push(<button>Cancel</button>);
+		buttons.push(<button key="cancel">Cancel</button>);
 	}
 	if (canConfirm) {
-		buttons.push(<button>Confirm</button>);
+		buttons.push(<button key="confirm">Confirm</button>);
 	}
 	return buttons;
 };
@@ -19,11 +19,11 @@ export const Modal = props => {
 
 	return (
 		<div className="modal">
-			<header className="modal__title">{title}</header>
-			<section className="modal__content">{children}</section>
-			<section className="modal__actions">
+			<header className="modal__header">{title}</header>
+			<div className="modal__content">{children}</div>
+			<div className="modal__actions">
 				{renderButtons(canCancel, canConfirm)}
-			</section>
+			</div>
 		</div>
 	);
 }
