@@ -5,6 +5,7 @@ import { EventsView } from './containers/EventsView';
 import { BookingsView } from './containers/BookingsView';
 import AuthContext from './context/auth-context';
 import Navbar from './components/Navbar/Navbar';
+import { Modal } from './components/Modal/Modal';
 
 
 export class App extends Component {
@@ -55,9 +56,14 @@ export class App extends Component {
                         }}
                     >
                         <Navbar />
-                        <main>
-                            { this.renderRoutes() }
-                        </main>
+                        <React.Fragment>
+                            <Modal>
+                                <p>Modal Content</p>
+                            </Modal>
+                            <main>
+                                {this.renderRoutes()}
+                            </main>
+                        </React.Fragment>
                     </AuthContext.Provider>
                 </React.Fragment>
             </BrowserRouter>
