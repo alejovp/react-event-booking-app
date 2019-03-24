@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import AuthView from './views/AuthView';
-import { EventsView } from './views/EventsView';
-import { BookingsView } from './views/BookingsView';
-import Navbar from './components/Navbar';
+import AuthView from './containers/AuthView';
+import { EventsView } from './containers/EventsView';
+import { BookingsView } from './containers/BookingsView';
 import AuthContext from './context/auth-context';
+import Navbar from './components/Navbar/Navbar';
 
 
 export class App extends Component {

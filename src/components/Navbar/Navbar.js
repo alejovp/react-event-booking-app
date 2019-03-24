@@ -15,7 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import Grow from '@material-ui/core/Grow';
 import Popper from '@material-ui/core/Popper';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import AuthContext from '../context/auth-context';
+import AuthContext from '../../context/auth-context';
 
 
 const styles = {

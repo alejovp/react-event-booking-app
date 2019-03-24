@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import AuthForm from '../components/AuthForm';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography, Link } from '@material-ui/core';
 import AuthContext from '../context/auth-context';
+import AuthForm from '../components/AuthForm/AuthForm';
 
 
 const styles = theme => ({
