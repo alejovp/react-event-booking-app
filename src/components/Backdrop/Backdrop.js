@@ -3,4 +3,4 @@ import React from 'react';
 import './Backdrop.scss';
 
 
-export const Backdrop = () => <div className="backdrop"></div>; 
+export const Backdrop = props => <div className="backdrop" onClick={props.onClose}></div>; 
