@@ -6,6 +6,7 @@ import { BookingsView } from './containers/BookingsView';
 import AuthContext from './context/auth-context';
 import Navbar from './components/Navbar/Navbar';
 import { Modal } from './components/Modal/Modal';
+import { Backdrop } from './components/Backdrop/Backdrop';
 
 
 export class App extends Component {
@@ -57,7 +58,8 @@ export class App extends Component {
                     >
                         <Navbar />
                         <React.Fragment>
-                            <Modal>
+                            <Backdrop></Backdrop>
+                            <Modal canCancel canConfirm>
                                 <p>Modal Content</p>
                             </Modal>
                             <main>
