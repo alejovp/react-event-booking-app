@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Modal.scss';
 
@@ -30,4 +31,13 @@ export const Modal = props => {
 			</div>
 		</div>
 	);
-}
+};
+
+Modal.propTypes = {
+	title: PropTypes.string, 
+	canCancel: PropTypes.bool, 
+	canConfirm: PropTypes.bool,
+	children: PropTypes.node,
+	onCancel: PropTypes.func,
+	onConfirm: PropTypes.func
+};
