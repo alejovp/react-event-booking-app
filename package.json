@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/alejovp/react-event-booking-app#readme",
   "scripts": {
-    "pre-build": "rm -rf public/js/",
+    "pre-build": "rm -rf public/js && rm -rf public/images",
     "build": "npm run pre-build && webpack -p",
     "build-dev": "npm run pre-build && webpack -d --watch",
     "dev-server": "webpack-dev-server",
