@@ -105,7 +105,7 @@ class AuthView extends Component {
     render() {
         const { classes } = this.props;
         const { formType } = this.state;
-        console.log('hey, is this the line number 82 from AuthView module?!');
+        
         return (
             <section>
                 <Paper classes={{ root: classes.root }}>
