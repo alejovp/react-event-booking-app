@@ -15,6 +15,7 @@ import defaultImg from './img/no-image.png';
 const styles = {
     card: {
         maxWidth: 345,
+        margin: 'auto'
     },
     media: {
         // ⚠️ object-fit is not supported by IE 11.
