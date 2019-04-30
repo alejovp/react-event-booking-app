@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import AuthView from './containers/AuthView';
 import EventsView from './containers/EventsView';
 import { BookingsView } from './containers/BookingsView';
 import AuthContext from './context/auth-context';
 import Navbar from './components/Navbar/Navbar';
+import CustomMuiTheme from './theme/CustomMuiTheme';
 
 
 export class App extends Component {
@@ -44,23 +46,25 @@ export class App extends Component {
         const { userId, token } = this.state;
 
         return (
-            <BrowserRouter>
-                <React.Fragment>
-                    <AuthContext.Provider 
-                        value={{ 
-                            userId, 
-                            token,
-                            login: this.login,
-                            logout: this.logout
-                        }}
-                    >
-                        <Navbar />
-                        <main>
-                            {this.renderRoutes()}
-                        </main>
-                    </AuthContext.Provider>
-                </React.Fragment>
-            </BrowserRouter>
+            <MuiThemeProvider theme={CustomMuiTheme}>
+                <BrowserRouter>
+                    <React.Fragment>
+                        <AuthContext.Provider 
+                            value={{ 
+                                userId, 
+                                token,
+                                login: this.login,
+                                logout: this.logout
+                            }}
+                        >
+                            <Navbar />
+                            <main>
+                                {this.renderRoutes()}
+                            </main>
+                        </AuthContext.Provider>
+                    </React.Fragment>
+                </BrowserRouter>
+            </MuiThemeProvider>
         );
     }
 }
