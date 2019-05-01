@@ -45,8 +45,6 @@ class AuthView extends Component {
     renderTitle = () => this.state.formType === 'register' ? 'Register' : 'Login';
     
     onSubmitHandler = userInputs => {
-        console.log(userInputs);
-
         let requestBody = {
             query: `
                 query {
@@ -91,7 +89,6 @@ class AuthView extends Component {
             return res.json();
         })
         .then(resData => {
-            console.log(resData);
             if (resData.data.login.token) {
                 const { userId, token, tokenExpiration } = resData.data.login;
                 this.context.login(userId, token, tokenExpiration);

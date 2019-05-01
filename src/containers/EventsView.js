@@ -8,6 +8,7 @@ import { EventsService } from '../services/EventsService';
 import { withModal } from '../hocs/withModal';
 import Event from '../components/Event/Event';
 import EventForm from '../components/EventForm.js/EventForm';
+import AuthContext from '../context/auth-context';
 
 
 const styles = {
@@ -30,14 +31,16 @@ class EventsView extends Component {
     state = {
         events: []
     }
-
+    static contextType = AuthContext;
+    
     componentDidMount = () => {
-        new EventsService()
+        const { token } = this.context;
+        this.eventsService =  new EventsService(token);
+
+        this.eventsService
             .getEvents()
             .then(this.setEvents)
-            .catch(err => {
-                console.error(err);
-            });
+            .catch(err => console.error(err));
     }
 
     setEvents = events => this.setState({ events });
@@ -51,8 +54,17 @@ class EventsView extends Component {
     );
 
     onSubmit = params => {
-        console.log(params);
-        this.props.onCloseModal()
+        this.eventsService
+            .createEvent(params)
+            .then(this.setNewEvent)
+            .catch(err => console.error(err));
+        
+        this.props.onCloseModal();
+    }
+
+    setNewEvent = newEvent => {
+        const updatedEvents = [ ...this.state.events, newEvent];
+        this.setState({ events: updatedEvents });
     }
 
     renderEvents = () => {
@@ -75,13 +87,12 @@ class EventsView extends Component {
         ));
 
     }
-    
-    render() {
+
+    renderAddEventButton = () => {
         const { classes } = this.props;
 
-        return (    
-            <div>
-                <h1>This is the events view!</h1>
+        if (this.context.token) {
+            return (
                 <Fab 
                     className={classes.fab}
                     onClick={this.onShowModal}
@@ -89,6 +100,17 @@ class EventsView extends Component {
                 >
                     <AddIcon />
                 </Fab>
+            );
+        }
+    }
+    
+    render() {
+        const { classes } = this.props;
+
+        return (    
+            <div>
+                <h1>This is the events view!</h1>
+                { this.renderAddEventButton() }
                 <div className={classes.container}>
                     <Grid container spacing={16}>
                         { this.renderEvents() }
@@ -100,7 +122,9 @@ class EventsView extends Component {
 }
 
 EventsView.propTypes = {
-    classes: PropTypes.object
+    classes: PropTypes.object,
+    onShowModal: PropTypes.func,
+    onCloseModal: PropTypes.func
 };
 
 export default withModal(withStyles(styles)(EventsView));
