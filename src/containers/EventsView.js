@@ -9,6 +9,7 @@ import { withModal } from '../hocs/withModal';
 import Event from '../components/Event/Event';
 import EventForm from '../components/EventForm.js/EventForm';
 import AuthContext from '../context/auth-context';
+import { Loading } from '../components/Loading/Loading';
 
 
 const styles = {
@@ -29,6 +30,7 @@ const styles = {
 class EventsView extends Component {
 
     state = {
+        isLoading: true,
         events: []
     }
     static contextType = AuthContext;
@@ -43,7 +45,7 @@ class EventsView extends Component {
             .catch(err => console.error(err));
     }
 
-    setEvents = events => this.setState({ events });
+    setEvents = events => this.setState({ isLoading: false, events });
 
     onShowModal = () => this.props.onShowModal(
         'New Event', 
@@ -63,8 +65,9 @@ class EventsView extends Component {
     }
 
     setNewEvent = newEvent => {
-        const updatedEvents = [ ...this.state.events, newEvent];
-        this.setState({ events: updatedEvents });
+        this.setState(prevState => ({ 
+            events: [ ...prevState.events, newEvent ]
+        }));
     }
 
     renderEvents = () => {
@@ -82,6 +85,7 @@ class EventsView extends Component {
                     description={event.description}
                     price={event.price}
                     creator={event.creator}
+                    date={event.date}
                 />
             </Grid>
         ));
@@ -105,17 +109,19 @@ class EventsView extends Component {
     }
     
     render() {
+        const { isLoading } = this.state;
         const { classes } = this.props;
 
         return (    
             <div>
                 <h1>This is the events view!</h1>
-                { this.renderAddEventButton() }
+                <Loading isLoading={isLoading} />
                 <div className={classes.container}>
                     <Grid container spacing={16}>
                         { this.renderEvents() }
                     </Grid>
                 </div>
+                { this.renderAddEventButton() }
             </div>
         );
     }
