@@ -9,6 +9,9 @@ const CustomMuiTheme = {
             secondary: green[500]
         }
     },
+    typography: {
+        useNextVariants: true,
+    },
     overrides: {
         MuiButton: {
             root: {
@@ -16,7 +19,7 @@ const CustomMuiTheme = {
                 borderRadius: 25,
                 minWidth: '104px',
             },
-        },
+        }
     }
 };
 

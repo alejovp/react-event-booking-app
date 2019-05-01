@@ -114,7 +114,7 @@ class AuthView extends Component {
                             { this.renderTitle() }
                     </Typography>
                     <Typography 
-                        variant="body2" 
+                        variant="body1" 
                         align="center">
                             { formType === 'login' ? 'Not a member yet? ' : 'Already a member? '}
                         <Link 
