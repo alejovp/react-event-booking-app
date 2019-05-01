@@ -19,6 +19,11 @@ const CustomMuiTheme = {
                 borderRadius: 25,
                 minWidth: '104px',
             },
+        },
+        MuiCard: {
+            root: {
+                borderRadius: 0
+            }
         }
     }
 };

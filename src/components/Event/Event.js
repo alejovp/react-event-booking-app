@@ -15,54 +15,68 @@ import defaultImg from './img/no-image.png';
 const styles = {
     card: {
         maxWidth: 345,
-        margin: 'auto'
+        minHeight: 355,
+        margin: 'auto',
+        position: 'relative'
     },
     media: {
         // ⚠️ object-fit is not supported by IE 11.
         objectFit: 'cover',
     },
+    price: {
+        position: 'absolute',
+        bottom: 0,
+        fontSize: 15,
+        right: 10
+    }
 };
 
-const Event = ({title, description, creator, price, classes}) => {
+const dateFormatter = date => {
+    const dateObj = new Date(date);
+    let minutes = dateObj.getMinutes();
+    if (minutes < 10) {
+        minutes = `0${minutes}`;
+    }
+    return `${dateObj.toLocaleDateString()} | ${dateObj.getHours()}:${minutes}`;
+};
+
+const Event = ({title, description, creator, date, price, classes}) => {
     return (
         <Card className={classes.card}>
-                {/* <CardActionArea> */}
-                    <CardMedia
-                        component="img"
-                        // alt="No image available"
-                        className={classes.media}
-                        height="140"
-                        image={defaultImg}
-                        // title="No image available"
-                    />
-                    <CardContent>
-                        <Typography 
-                            gutterBottom 
-                            variant="h5" 
-                            component="h2"
-                        >
-                            {title}
-                        </Typography>
-                        <Typography component="p">
-                            {description}
-                        </Typography>
-                    </CardContent>
-                {/* </CardActionArea> */}
-                <CardActions>
-                    <Button
-                        size="small"
-                        color="primary"
-                    >
-                        Share
-                    </Button>
-                    <Button 
-                        size="small" 
-                        color="primary"
-                    >
-                        Learn More
-                    </Button>
-                </CardActions>
-            </Card>
+            <CardMedia
+                component="img"
+                // alt="No image available"
+                className={classes.media}
+                height="140"
+                image={defaultImg}
+                // title="No image available"
+            />
+            <CardContent>
+                <Typography 
+                    variant="subtitle2" 
+                    color="textSecondary"
+                >
+                    {dateFormatter(date)}
+                </Typography>
+                <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="h2"
+                >
+                    {title}
+                </Typography>
+                <Typography component="p">
+                    {description}
+                </Typography>
+                <Typography 
+                    variant="overline"
+                    align="right"
+                    className={classes.price}
+                >
+                    {price}$
+                </Typography>
+            </CardContent>
+        </Card>
     );
 };
 
