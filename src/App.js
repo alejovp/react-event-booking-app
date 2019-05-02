@@ -6,7 +6,7 @@ import EventsView from './containers/EventsView';
 import { BookingsView } from './containers/BookingsView';
 import AuthContext from './context/auth-context';
 import Navbar from './components/Navbar/Navbar';
-import CustomMuiTheme from './theme/CustomMuiTheme';
+import CustomMuiTheme from './assets/theme/CustomMuiTheme';
 
 
 export class App extends Component {
