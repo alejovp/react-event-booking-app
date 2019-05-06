@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import defaultImg from './img/no-image.png';
+import defaultImg from '../../assets/img/no-image.png';
 
 
 const styles = {
     card: {
         maxWidth: 345,
-        minHeight: 355,
+        // minHeight: 355,
         margin: 'auto',
         position: 'relative'
     },
@@ -23,9 +21,10 @@ const styles = {
         // ⚠️ object-fit is not supported by IE 11.
         objectFit: 'cover',
     },
+    content: {
+        minHeight: 90,
+    },
     price: {
-        position: 'absolute',
-        bottom: 0,
         fontSize: 15,
         right: 10
     }
@@ -40,52 +39,60 @@ const dateFormatter = date => {
     return `${dateObj.toLocaleDateString()} | ${dateObj.getHours()}:${minutes}`;
 };
 
-const Event = ({title, description, creator, date, price, classes}) => {
+const Event = ({eventData, onSelection, classes}) => {
+    const { _id, title, description, date, price, creator } = eventData;
+    const formattedDate = dateFormatter(date);
+
+    const onSelectionHandler = () => onSelection({ _id, title, description, date: formattedDate, price, creator });
+
     return (
         <Card className={classes.card}>
-            <CardMedia
-                component="img"
-                // alt="No image available"
-                className={classes.media}
-                height="140"
-                image={defaultImg}
-                // title="No image available"
-            />
-            <CardContent>
-                <Typography 
-                    variant="subtitle2" 
-                    color="textSecondary"
-                >
-                    {dateFormatter(date)}
-                </Typography>
-                <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="h2"
-                >
-                    {title}
-                </Typography>
-                <Typography component="p">
-                    {description}
-                </Typography>
-                <Typography 
-                    variant="overline"
-                    align="right"
-                    className={classes.price}
-                >
-                    {price}$
-                </Typography>
-            </CardContent>
+            <CardActionArea onClick={onSelectionHandler}>
+                <CardMedia
+                    component="img"
+                    // alt="No image available"
+                    className={classes.media}
+                    height="140"
+                    image={defaultImg}
+                    // title="No image available"
+                />
+                <CardContent>
+                    <Typography 
+                        variant="subtitle2" 
+                        color="textSecondary"
+                    >
+                        {formattedDate}
+                    </Typography>
+                    <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="h2"
+                    >
+                        {title}
+                    </Typography>
+                    <Typography 
+                        component="p"
+                        className={classes.content}
+                    >
+                        {description}
+                    </Typography>
+                    <Typography 
+                        variant="overline"
+                        align="right"
+                        className={classes.price}
+                    >
+                        ${price}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
         </Card>
     );
 };
 
 Event.propTypes = {
+    eventData: PropTypes.object,
     classes: PropTypes.object,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    price: PropTypes.number,
-    creator: PropTypes.object
+    onSelection: PropTypes.func
 };
 
 export default withStyles(styles)(Event);

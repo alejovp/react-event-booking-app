@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import { withStyles } from '@material-ui/core/styles';
 import ConfirmButton from '../ConfirmButton/ConfirmButton';
 
 import './Modal.scss';
-import { withStyles } from '@material-ui/core';
 
 
 const styles = theme => ({
@@ -52,6 +53,7 @@ const Modal = ({ title, canCancel, canConfirm, children, onCancel, onConfirm, cl
 		<div className="modal">
 			<header className="modal__header">{title}</header>
 			<div className="modal__content">{children}</div>
+			<Divider />
 			{renderButtons()}
 		</div>
 	);
