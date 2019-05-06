@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography, Link } from '@material-ui/core';
 import AuthContext from '../context/auth-context';
 import AuthForm from '../components/AuthForm/AuthForm';
+import { AuthService } from '../services/AuthService';
 
 
 const styles = theme => ({
@@ -25,7 +27,7 @@ class AuthView extends Component {
     
     constructor(props) {
         super(props);
-        
+        this.authService = new AuthService();
         this.state = {
             formType: 'login',
         };
@@ -45,58 +47,26 @@ class AuthView extends Component {
     renderTitle = () => this.state.formType === 'register' ? 'Register' : 'Login';
     
     onSubmitHandler = userInputs => {
-        let requestBody = {
-            query: `
-                query {
-                    login(email: "${userInputs.email}", password: "${userInputs.password}") {
-                        userId
-                        token
-                        tokenExpiration
-                    }
-                }  
-            `
-        };
+        let doRequest;
 
         if (this.state.formType === 'register') {
-            requestBody = {
-                query: `
-                    mutation {
-                        createUser(userInput: {email: "${userInputs.email}",
-                                                password: "${userInputs.password}", 
-                                                firstName: "${userInputs.firstName}", 
-                                                lastName: "${userInputs.lastName}"}) 
-                        {
-                            _id
-                            firstName
-                            email
-                        }
-                    }
-                `
-            };
+            doRequest = this.authService.register(userInputs);
+        } else {
+            doRequest = this.authService.login(userInputs);
         }
-        
-        fetch('http://localhost:3000/graphql-api', {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(res => {
-            if (res.status !== 200 && res.status !== 201) {
-                throw new Error('Request failed!');
-            }
-            return res.json();
-        })
-        .then(resData => {
-            if (resData.data.login.token) {
-                const { userId, token, tokenExpiration } = resData.data.login;
-                this.context.login(userId, token, tokenExpiration);
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
+
+        doRequest
+            .then(resData => {
+                if (resData.data.login && resData.data.login.token) {
+                    const { userId, token, tokenExpiration } = resData.data.login;
+                    this.context.login(userId, token, tokenExpiration);
+                } else {
+                    this.setState({ formType: 'login' });
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     render() {
@@ -133,5 +103,9 @@ class AuthView extends Component {
         );
     }
 }
+
+AuthView.propTypes = {
+    classes: PropTypes.object
+};
 
 export default withStyles(styles)(AuthView);
