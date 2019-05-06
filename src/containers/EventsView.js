@@ -10,6 +10,7 @@ import Event from '../components/Event/Event';
 import EventForm from '../components/EventForm.js/EventForm';
 import AuthContext from '../context/auth-context';
 import { Loading } from '../components/Loading/Loading';
+import EventDetail from '../components/EventDetail/EventDetail';
 
 
 const styles = {
@@ -47,7 +48,7 @@ class EventsView extends Component {
 
     setEvents = events => this.setState({ isLoading: false, events });
 
-    onShowModal = () => this.props.onShowModal(
+    onAddEvent = () => this.props.onShowModal(
         'New Event', 
         <EventForm 
             onSubmit={this.onSubmit}
@@ -70,6 +71,16 @@ class EventsView extends Component {
         }));
     }
 
+    onEventSelection = event => this.props.onShowModal(
+        'Event Details',
+        <EventDetail 
+            event={event}
+        />,
+        undefined,
+        undefined,
+        true
+    );
+
     renderEvents = () => {
         return this.state.events.map(event => (
             <Grid 
@@ -81,11 +92,8 @@ class EventsView extends Component {
                 key={event._id}
             >
                 <Event
-                    title={event.title}
-                    description={event.description}
-                    price={event.price}
-                    creator={event.creator}
-                    date={event.date}
+                    eventData={event}
+                    onSelection={this.onEventSelection}
                 />
             </Grid>
         ));
@@ -99,7 +107,7 @@ class EventsView extends Component {
             return (
                 <Fab 
                     className={classes.fab}
-                    onClick={this.onShowModal}
+                    onClick={this.onAddEvent}
                     color="primary"
                 >
                     <AddIcon />
