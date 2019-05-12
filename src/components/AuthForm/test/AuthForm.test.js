@@ -8,19 +8,6 @@ import AuthForm from '../AuthForm';
 configure({ adapter: new Adapter() });
 
 describe('<AuthForm />', () => {
-
-    const defaultState = {
-        firstName: undefined,
-        lastName: undefined,
-        email: undefined,
-        password: undefined,
-        formErrors: {
-            firstNameError: undefined,
-            lastNameError: undefined,
-            emailError: undefined,
-            passwordError: undefined
-        }
-    };
     const renderedComponent = mount(<AuthForm />);
 
     describe('shape', () => {
@@ -50,15 +37,48 @@ describe('<AuthForm />', () => {
     });
 
     describe('props', () => {
+        const registerForm = mount(<AuthForm formType='register' />);
+        const firstnameInput = registerForm.find('[name="firstName"]').filter('input');
+        const lastnameInput = registerForm.find('[name="lastName"]').filter('input');
+        
+        it('will show an error message if email value is not supplied', () => {
+            renderedComponent.simulate('submit');
+            renderedComponent.update();
+            const errorMessage = renderedComponent.findWhere(n => n.type() === 'p' && n.text() === 'Please enter your email address.');
+            expect(errorMessage).toHaveLength(1);
+        });
+
         it('will show an error message if email value is not correct', () => {
             const emailInput = renderedComponent.find('[name="email"]').filter('input');
             emailInput.simulate('change', { target: { name: 'email', value: 'alejovptest.com' } });
             renderedComponent.simulate('submit');
-            // console.log(renderedComponent.children().state().email)
-            // console.log(renderedComponent.children().state().formErrors)
             renderedComponent.update();
             const errorMessage = renderedComponent.findWhere(n => n.type() === 'p' && n.text() === 'Please enter a valid email address.');
             expect(errorMessage).toHaveLength(1);
+        });
+
+        it('will show an error message if password value is not supplied', () => {
+            renderedComponent.simulate('submit');
+            renderedComponent.update();
+            const errorMessage = renderedComponent.findWhere(n => n.type() === 'p' && n.text() === 'Please enter your password.');
+            expect(errorMessage).toHaveLength(1);
+        });
+
+        it('will render a firstname input elem if formType prop === register', () => {
+            expect(firstnameInput).toHaveLength(1);
+        });
+
+        it('will render a lastname input elem if formType prop === register', () => {
+            expect(lastnameInput).toHaveLength(1);
+        });
+
+        it('will show an error message if firstname or lastname values are not correct', () => {
+            firstnameInput.simulate('change', { target: { name: 'firstName', value: 'alejo-' } });
+            lastnameInput.simulate('change', { target: { name: 'lastName', value: 'vazque-' } });
+            registerForm.simulate('submit');
+            registerForm.update();
+            const errorMessage = registerForm.findWhere(n => n.type() === 'p' && n.text() === 'Please enter alphabet characters only.');
+            expect(errorMessage).toHaveLength(2);
         });
     });
 
