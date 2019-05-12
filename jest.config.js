@@ -27,5 +27,8 @@ module.exports = {
     testURL: 'http://localhost:8080',
     transform: {
         '^.+\\.jsx?$': 'babel-jest'
+    },
+    moduleNameMapper: {
+        '^.+\\.(css|scss)$': 'babel-jest'
     }
 };
