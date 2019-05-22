@@ -40,6 +40,11 @@ const dateFormatter = date => {
 };
 
 const Event = ({eventData, onSelection, classes}) => {
+
+    if (!eventData) {
+        return null;
+    }
+
     const { _id, title, description, date, price, creator } = eventData;
     const formattedDate = dateFormatter(date);
 

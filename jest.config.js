@@ -29,6 +29,6 @@ module.exports = {
         '^.+\\.jsx?$': 'babel-jest'
     },
     moduleNameMapper: {
-        '^.+\\.(css|scss)$': 'babel-jest'
+        '^.+\\.(css|scss|png|jpg)$': 'babel-jest'
     }
 };
